@@ -11,7 +11,7 @@
 	<groupId>tech.getarrays</groupId>
 	<artifactId>employeemanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>employeemanager</name>
+	<name>springboot-employee-k8s</name>
 	<description>Employee Manager App</description>
 
 	<properties>
@@ -53,6 +53,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>springboot-employee-k8s</finalName>
 	</build>
 
 </project>
