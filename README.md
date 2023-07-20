@@ -1,2 +1,3 @@
-# employeemanager
-App to manage employees
+# Employee Management 
+
+CI/CD pipeline using jenkins
