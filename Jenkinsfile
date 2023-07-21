@@ -31,6 +31,10 @@ spec:
     }
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
+        DB_HOST = 'mysql'
+        DB_USERNAME = 'root'
+        DB_PASSWORD = 'root'
+        DB_NAME = 'bsisa'
     }
        stages{
              stage('checkout'){
