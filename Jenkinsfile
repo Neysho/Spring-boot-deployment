@@ -49,7 +49,7 @@ spec:
             }
 
             
-            stage('Kubernetes here') {
+            stage('Deploying Backend') {
                 steps {
                     container('kubectl') {
                      withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
