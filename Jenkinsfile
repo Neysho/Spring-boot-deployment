@@ -19,12 +19,6 @@ spec:
     volumeMounts:
     - mountPath: /var/run/docker.sock
       name: docker-sock
-  - name: maven
-    image: maven:3.9.3
-    tty: true
-    command: ["mvn"]
-    args:
-    - 99999
   - name: docker-sock
     hostPath:
       path: /var/run/docker.sock      
@@ -37,19 +31,25 @@ spec:
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
     }
-
-    stages{
-      stage('test text'){
-                steps{
-                    container('maven') {
-                      checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-                      // sh  'mvn clean install'
-                      sh 'ls'
-                      sh 'pwd'
-               }
-              }
+       stages{
+             stage('checkout'){
+                        steps{
+                         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+                       }
+                  }
             }
-            stage('Checkout'){
+    // stages{
+    //   stage('test text'){
+    //             steps{
+    //                 container('maven') {
+    //                   checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+    //                   // sh  'mvn clean install'
+    //                   sh 'ls'
+    //                   sh 'pwd'
+    //            }
+    //           }
+    //         }
+            stage('docker build'){
                 steps{
                     container('docker') {
                       sh 'ls'
