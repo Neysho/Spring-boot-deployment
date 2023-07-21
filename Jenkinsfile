@@ -54,7 +54,7 @@ spec:
                       checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                       // sh  'mvn clean install'
                       sh 'ls'
-                      sh 'ls target/'
+                      sh 'pwd'
                }
               }
             }
