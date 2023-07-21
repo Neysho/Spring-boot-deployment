@@ -46,10 +46,14 @@ spec:
     }
 
     stages{
+      stage('checkout'){
+        steps{
+           checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+        }
+      }
       stage('test text'){
                 steps{
                     container('maven') {
-                      checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                       sh 'touch /opt/springboot-app/shared/file.txt'
                       // sh  'mvn clean install'
                       sh 'ls'
