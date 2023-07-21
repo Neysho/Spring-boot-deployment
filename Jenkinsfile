@@ -19,7 +19,17 @@ spec:
     volumeMounts:
     - mountPath: /var/run/docker.sock
       name: docker-sock
+    - mountPath: '/opt/springboot-app/shared'
+      name: sharedvolume
+  - name: maven
+    image: maven:latest  
+    tty: true
+    volumeMounts:
+    - mountPath: '/opt/springboot-app/shared'
+      name: sharedvolume
   volumes:
+  - name: sharedvolume
+    emptyDir: {}
   - name: docker-sock
     hostPath:
       path: /var/run/docker.sock      
@@ -34,29 +44,37 @@ spec:
     }
 
     stages{
+      stage('test text'){
+                steps{
+                    container('maven') {
+                      sh 'touch /opt/springboot-app/shared/file.txt'
+               }
+              }
+            }
             stage('Checkout'){
                 steps{
                     container('docker') {
+                      sh 'ls /opt/springboot-app/shared'
                     // deleteDir()
-                     checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-                       sh ''' ls
-                              docker build -t neysho/emp-backend:1 .
-                              echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                              docker push neysho/emp-backend:1
-                       '''
+                    //  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+                    //    sh ''' ls
+                    //           docker build -t neysho/emp-backend:1 .
+                    //           echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    //           docker push neysho/emp-backend:1
+                    //    '''
                }
               }
             }
 
             
-            stage('Deploying Backend') {
-                steps {
-                    container('kubectl') {
-                     withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
-                     sh 'kubectl delete pods -n emp -l app=springboot-dep'
-                  }
-                  }
-                }
-            }
+            // stage('Deploying Backend') {
+            //     steps {
+            //         container('kubectl') {
+            //          withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
+            //          sh 'kubectl delete pods -n emp -l app=springboot-dep'
+            //       }
+            //       }
+            //     }
+            // }
     }
   }
