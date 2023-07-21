@@ -19,18 +19,12 @@ spec:
     volumeMounts:
     - mountPath: /var/run/docker.sock
       name: docker-sock
-    - mountPath: '/opt/springboot-app/shared'
-      name: sharedvolume
   - name: maven
     image: maven:3.9.3
     tty: true
     command: ["mvn"]
-    volumeMounts:
-    - mountPath: '/opt/springboot-app/shared'
-      name: sharedvolume
-  volumes:
-  - name: sharedvolume
-    emptyDir: {}
+    args:
+    - 99999
   - name: docker-sock
     hostPath:
       path: /var/run/docker.sock      
