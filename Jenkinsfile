@@ -49,9 +49,8 @@ spec:
       stage('test text'){
                 steps{
                     container('maven') {
-                      sh 'touch /opt/springboot-app/shared/file.txt'
-                      sh 'cd /opt/springboot-app/shared/'
                       checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+                      sh 'touch /opt/springboot-app/shared/file.txt'
                       // sh  'mvn clean install'
                       sh 'ls'
                       sh 'pwd'
@@ -61,6 +60,8 @@ spec:
             stage('Checkout'){
                 steps{
                     container('docker') {
+                      sh 'ls'
+                      sh 'pwd'
                       sh 'ls /opt/springboot-app/shared'
                     // deleteDir()
                     //  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
