@@ -53,10 +53,6 @@ spec:
             stage('docker build'){
                 steps{
                     container('docker') {
-                      sh 'ls'
-                      sh 'pwd'
-                    // deleteDir()
-                    //  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                         sh ''' ls
                                docker build -t neysho/emp-backend:1 .
                                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
@@ -67,14 +63,14 @@ spec:
             }
 
             
-            // stage('Deploying Backend') {
-            //     steps {
-            //         container('kubectl') {
-            //          withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
-            //          sh 'kubectl delete pods -n emp -l app=springboot-dep'
-            //       }
-            //       }
-            //     }
-            // }
+             stage('Deploying Backend') {
+                 steps {
+                     container('kubectl') {
+                      withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
+                      sh 'kubectl delete pods -n emp -l app=springboot-dep'
+                   }
+                   }
+                 }
+             }
     }
   }
