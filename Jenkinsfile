@@ -38,17 +38,11 @@ spec:
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                        }
                   }
-    // stages{
-    //   stage('test text'){
-    //             steps{
-    //                 container('maven') {
-    //                   checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-    //                   // sh  'mvn clean install'
-    //                   sh 'ls'
-    //                   sh 'pwd'
-    //            }
-    //           }
-    //         }
+                  stage('Build Maven'){
+                steps{
+                    sh 'mvn clean install'
+                }
+            }
             stage('docker build'){
                 steps{
                     container('docker') {
@@ -56,11 +50,11 @@ spec:
                       sh 'pwd'
                     // deleteDir()
                     //  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-                    //    sh ''' ls
-                    //           docker build -t neysho/emp-backend:1 .
-                    //           echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    //           docker push neysho/emp-backend:1
-                    //    '''
+                        sh ''' ls
+                               docker build -t neysho/emp-backend:1 .
+                               echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                               docker push neysho/emp-backend:1
+                        '''
                }
               }
             }
