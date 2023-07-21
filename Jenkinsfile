@@ -26,15 +26,16 @@ spec:
       '''
       }
     }
-    // tools {
-    //     nodejs "node-14.21.3"
-    // }
+    tools{
+        maven 'maven-3.9.3'
+    }
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
     }
        stages{
              stage('checkout'){
                         steps{
+                         deleteDir()
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                        }
                   }
