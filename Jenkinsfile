@@ -25,7 +25,7 @@ spec:
     image: maven:3.9.3
     tty: true
     command: ["mvn"]
-    args: ["package"]
+    args: ["-v"]
     volumeMounts:
     - mountPath: '/opt/springboot-app/shared'
       name: sharedvolume
