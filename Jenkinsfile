@@ -22,7 +22,7 @@ spec:
     - mountPath: '/opt/springboot-app/shared'
       name: sharedvolume
   - name: maven
-    image: maven:latest  
+    image: maven:3.9.3  
     tty: true
     volumeMounts:
     - mountPath: '/opt/springboot-app/shared'
