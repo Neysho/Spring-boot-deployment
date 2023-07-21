@@ -24,6 +24,8 @@ spec:
   - name: maven
     image: maven:3.9.3
     tty: true
+    command: ["mvn"]
+    args: ["package"]
     volumeMounts:
     - mountPath: '/opt/springboot-app/shared'
       name: sharedvolume
@@ -48,6 +50,11 @@ spec:
                 steps{
                     container('maven') {
                       sh 'touch /opt/springboot-app/shared/file.txt'
+                      sh 'cd /opt/springboot-app/shared/'
+                      checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+                      sh  'mvn clean install'
+                      sh 'ls'
+                      sh 'ls target/'
                }
               }
             }
