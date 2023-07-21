@@ -37,7 +37,6 @@ spec:
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                        }
                   }
-            }
     // stages{
     //   stage('test text'){
     //             steps{
