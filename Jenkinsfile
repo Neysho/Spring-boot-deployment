@@ -41,7 +41,9 @@ spec:
                   }
                   stage('Build Maven'){
                 steps{
+                  withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
                     sh 'mvn clean install'
+                  }
                 }
             }
             stage('docker build'){
