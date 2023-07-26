@@ -50,6 +50,16 @@ spec:
                   }
                 }
             }
+        //    stage("Sonarqube Analysis") {
+        //     steps {
+        //         script {
+        //             withSonarQubeEnv(credentialsId: 'sonar-id') {
+        //                 sh "mvn sonar:sonar"
+        //             }
+        //         }
+        //     }
+
+        // }
             stage('docker build'){
                 steps{
                     container('docker') {
