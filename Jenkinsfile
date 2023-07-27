@@ -71,9 +71,18 @@ spec:
                }
               }
             }
-
+           
+            stage('indentifying misconfigs using datree in helm charts'){
+            steps{
+                script{
+                        // withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
+                              sh 'helm datree test kubernetes/chart/'
+                    // }
+                }
+            }
+        }
             
-             stage('Deploying Backend') {
+             stage('Deploying to kubernetes') {
                  steps {
                      container('kubectl') {
                       withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
