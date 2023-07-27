@@ -45,9 +45,7 @@ spec:
                   }
             //       stage('Build Maven'){
             //     steps{
-            //       withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
             //         sh 'mvn clean install'
-            //       }
             //     }
             // }
         //    stage("Sonarqube Analysis") {
@@ -87,7 +85,7 @@ spec:
                  steps {
                      container('kubectl') {
                       withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
-                      sh 'kubectl delete pods -n emp -l app=springboot-k8s-mysql'
+                      sh 'kubectl get pods'
                    }
                    }
                  }
