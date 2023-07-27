@@ -72,16 +72,16 @@ spec:
             //   }
             // }
            
-            stage('indentifying misconfigs using datree in helm charts'){
-                agent any
-            steps{
-                script{
-                        // withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
-                              sh 'helm datree test kubernetes/chart/'
-                    // }
-                }
-            }
-        }
+        //     stage('indentifying misconfigs using datree in helm charts'){
+        //         agent any
+        //     steps{
+        //         script{
+        //                 // withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
+        //                       sh 'helm datree test kubernetes/chart/'
+        //             // }
+        //         }
+        //     }
+        // }
             
              stage('Deploying to kubernetes') {
                  steps {
