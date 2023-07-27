@@ -1,0 +1,14 @@
+dep:
+  replicas: 1
+  springbootApp:
+    image:
+      repository: neysho/emp-backend
+      tag: "1"
+    imagePullPolicy: Always
+kubernetesClusterDomain: cluster.local
+svc:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  type: NodePort
