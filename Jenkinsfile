@@ -43,13 +43,13 @@ spec:
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                        }
                   }
-                  stage('Build Maven'){
-                steps{
-                  withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
-                    sh 'mvn clean install'
-                  }
-                }
-            }
+            //       stage('Build Maven'){
+            //     steps{
+            //       withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
+            //         sh 'mvn clean install'
+            //       }
+            //     }
+            // }
         //    stage("Sonarqube Analysis") {
         //     steps {
         //         script {
@@ -60,17 +60,17 @@ spec:
         //     }
 
         // }
-            stage('docker build'){
-                steps{
-                    container('docker') {
-                        sh ''' ls
-                               docker build -t neysho/emp-backend:1 .
-                               echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                               docker push neysho/emp-backend:1
-                        '''
-               }
-              }
-            }
+            // stage('docker build'){
+            //     steps{
+            //         container('docker') {
+            //             sh ''' ls
+            //                    docker build -t neysho/emp-backend:1 .
+            //                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+            //                    docker push neysho/emp-backend:1
+            //             '''
+            //    }
+            //   }
+            // }
            
             stage('indentifying misconfigs using datree in helm charts'){
                 agent any
