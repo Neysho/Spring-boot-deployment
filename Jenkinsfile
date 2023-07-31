@@ -50,7 +50,9 @@ spec:
                  }
              }
             stage("Sonarqube Analysis") {
-              agent jenkins
+              agent {
+                jenkins
+              }
                 tools{
                     maven 'maven-3.9.3'
                     }
