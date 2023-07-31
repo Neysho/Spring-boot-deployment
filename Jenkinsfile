@@ -50,6 +50,9 @@ spec:
                  }
              }
             stage("Sonarqube Analysis") {
+                tools{
+                    maven 'maven-3.9.3'
+                    }
              steps {
                  script {
                      withSonarQubeEnv(credentialsId: 'sonar-id') {
