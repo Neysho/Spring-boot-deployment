@@ -50,7 +50,6 @@ spec:
                  }
              }
             stage("Sonarqube Analysis") {
-              agent any
                 tools{
                     maven 'maven-3.9.3'
                     }
@@ -75,16 +74,20 @@ spec:
                }
              }
            
-        //     stage('indentifying misconfigs using datree in helm charts'){
-        //         agent any
-        //     steps{
-        //         script{
-        //                 // withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
-        //                       sh 'helm datree test kubernetes/chart/'
-        //             // }
-        //         }
-        //     }
-        // }
+             stage('indentifying misconfigs using datree in helm charts'){
+                 agent any
+             steps{
+              catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                    // Steps that might fail but should be ignored
+                    script{
+                          withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
+                               sh 'helm datree test kubernetes/chart/'
+                        }
+                 }
+                }
+                 
+             }
+         }
             
              stage('Deploying to kubernetes') {
                  steps {
