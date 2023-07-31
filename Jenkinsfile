@@ -26,16 +26,16 @@ spec:
       '''
       }
     }
-    tools{
-        maven 'maven-3.9.3'
-    }
-    environment{
-        DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
-        DB_HOST = '10.96.161.243'
-        DB_USERNAME = 'root'
-        DB_PASSWORD = 'root'
-        DB_NAME = 'bsisa'
-    }
+    // tools{
+    //     maven 'maven-3.9.3'
+    // }
+    // environment{
+    //     DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
+    //     DB_HOST = '10.96.161.243'
+    //     DB_USERNAME = 'root'
+    //     DB_PASSWORD = 'root'
+    //     DB_NAME = 'bsisa'
+    // }
        stages{
             //  stage('checkout'){
             //             steps{
