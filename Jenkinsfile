@@ -26,49 +26,50 @@ spec:
       '''
       }
     }
-    // tools{
-    //     maven 'maven-3.9.3'
-    // }
-    // environment{
-    //     DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
-    //     DB_HOST = '10.96.161.243'
-    //     DB_USERNAME = 'root'
-    //     DB_PASSWORD = 'root'
-    //     DB_NAME = 'bsisa'
-    // }
+    
+    environment{
+        DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
+        DB_HOST = '10.96.161.243'
+        DB_USERNAME = 'root'
+        DB_PASSWORD = 'root'
+        DB_NAME = 'bsisa'
+    }
        stages{
-            //  stage('checkout'){
-            //             steps{
-            //             //  deleteDir()
-            //              checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-            //            }
-            //       }
-            //       stage('Build Maven'){
-            //     steps{
-            //         sh 'mvn clean install'
-            //     }
-            // }
-        //    stage("Sonarqube Analysis") {
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv(credentialsId: 'sonar-id') {
-        //                 sh "mvn sonar:sonar"
-        //             }
-        //         }
-        //     }
+             stage('checkout'){
+                        steps{
+                        //  deleteDir()
+                         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+                       }
+                  }
+                   stage('Build Maven'){
+                      tools{
+                       maven 'maven-3.9.3'
+                      }
+                 steps{
+                     sh 'mvn clean install'
+                 }
+             }
+            stage("Sonarqube Analysis") {
+             steps {
+                 script {
+                     withSonarQubeEnv(credentialsId: 'sonar-id') {
+                         sh "mvn sonar:sonar"
+                     }
+                 }
+             }
 
-        // }
-            // stage('docker build'){
-            //     steps{
-            //         container('docker') {
-            //             sh ''' ls
-            //                    docker build -t neysho/emp-backend:1 .
-            //                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-            //                    docker push neysho/emp-backend:1
-            //             '''
-            //    }
-            //   }
-            // }
+         }
+             stage('docker build'){
+                 steps{
+                     container('docker') {
+                         sh ''' ls
+                                docker build -t neysho/emp-backend:1 .
+                                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                                docker push neysho/emp-backend:1
+                         '''
+                }
+               }
+             }
            
         //     stage('indentifying misconfigs using datree in helm charts'){
         //         agent any
