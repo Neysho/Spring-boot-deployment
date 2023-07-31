@@ -37,12 +37,12 @@ spec:
         DB_NAME = 'bsisa'
     }
        stages{
-             stage('checkout'){
-                        steps{
-                        //  deleteDir()
-                         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-                       }
-                  }
+            //  stage('checkout'){
+            //             steps{
+            //             //  deleteDir()
+            //              checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
+            //            }
+            //       }
             //       stage('Build Maven'){
             //     steps{
             //         sh 'mvn clean install'
