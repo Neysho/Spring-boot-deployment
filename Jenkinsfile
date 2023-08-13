@@ -30,7 +30,7 @@ spec:
     
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
-        DB_HOST = '10.96.161.243'
+        DB_HOST = '10.111.70.103'
         DB_USERNAME = 'root'
         DB_PASSWORD = 'root'
         DB_NAME = 'bsisa'
