@@ -37,6 +37,7 @@ spec:
     
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
+        DB_USERNAME = credentials('mysql_user')
         // DB_HOST = '10.97.244.243'
         // DB_USERNAME = 'root'
         // DB_PASSWORD = 'root'
@@ -52,6 +53,7 @@ spec:
               stage('test var'){
                         steps{
                           sh 'echo "$DB_HOST"'
+                          sh 'echo "$DB_USERNAME"'    
                        }
                   }
            
