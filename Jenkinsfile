@@ -42,6 +42,9 @@ spec:
     //     DB_PASSWORD = 'root'
     //     DB_NAME = 'bsisa'
     // }
+    environment{
+     DB_HOST = ${{ vars.DB_HOST }}
+    }
        stages{
              stage('checkout'){
                         steps{
@@ -52,7 +55,7 @@ spec:
                   }
            stage('Test db_host var'){
                  steps{
-                     sh 'echo "${{ vars.DB_HOST }}"'
+                     sh 'echo "$DB_HOST"'
                  }
              }
          //           stage('Build Maven'){
