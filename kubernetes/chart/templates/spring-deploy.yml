@@ -2,46 +2,39 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "springboot.fullname" . }}-dep
+  namespace: emp
   labels:
   {{- include "springboot.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.dep.replicas }}
   selector:
     matchLabels:
-      app: springboot-k8s-mysql
+      app: springboot-app
     {{- include "springboot.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: springboot-k8s-mysql
+        app: springboot-app
       {{- include "springboot.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - env:
         - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: mysql-server
-              name: db-config
+          value: {{ .Values.mysql.host | quote }}
+        - name: DB_PORT
+          value: {{ .Values.mysql.service.port | quote }}
         - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: mysql-database-name
-              name: db-config
+          value: {{ .Values.mysql.mysqlDatabase | quote }}
         - name: DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              key: username
-              name: mysql-secrets
+          value: {{ .Values.mysql.mysqlUser | quote }}
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: mysql-root-password
               name: mysql-secrets
-        - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.dep.springbootApp.image.repository }}:{{ .Values.dep.springbootApp.image.tag
-          | default .Chart.AppVersion }}
+              key: mysqlPassword
+        - name: DATABASE_DRIVER
+          value: {{ .Values.mysql.mysqlDriver | quote }}       
+        image: {{ .Values.dep.springbootApp.image.repository }}:{{ .Values.dep.springbootApp.image.tag }}
         imagePullPolicy: {{ .Values.dep.springbootApp.imagePullPolicy }}
         name: springboot-app
         ports:
@@ -54,12 +47,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "springboot.fullname" . }}-svc
+  namespace: emp
   labels:
   {{- include "springboot.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.svc.type }}
   selector:
-    app: springboot-k8s-mysql
+    app: springboot-app
   {{- include "springboot.selectorLabels" . | nindent 4 }}
   ports:
         {{- .Values.svc.ports | toYaml | nindent 2 -}}
