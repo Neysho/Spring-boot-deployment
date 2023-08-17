@@ -52,7 +52,7 @@ spec:
                   }
            stage('Test db_host var'){
                  steps{
-                     sh 'echo ${{ vars.DB_HOST }}'  
+                     sh "echo ${{ vars.DB_HOST }}"  
                  }
              }
          //           stage('Build Maven'){
