@@ -8,7 +8,6 @@ dep:
       repository: neysho/emp-backend
       tag: "1"
     imagePullPolicy: Always
-kubernetesClusterDomain: cluster.local
 svc:
   ports:
   - port: 8080
