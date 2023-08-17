@@ -11,8 +11,16 @@ spec:
     imagePullPolicy: IfNotPresent
     command: ["cat"]
     tty: true
+    resources:
+      requests:
+        cpu: "0.3"
+        memory: "1000Mi"
+      limits:
+        cpu: "1"
+        memory: "2000Mi"   
   - name: docker
     image: docker:latest
+    imagePullPolicy: IfNotPresent
     command:
     - cat
     tty: true
@@ -29,10 +37,8 @@ spec:
     
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
-        DB_HOST = '10.96.161.243'
-        DB_USERNAME = 'root'
-        DB_PASSWORD = 'root'
-        DB_NAME = 'bsisa'
+        DB_USERNAME = credentials('mysql_user')
+        DB_PASSWORD = credentials('mysql_password')
     }
        stages{
              stage('checkout'){
@@ -41,6 +47,7 @@ spec:
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                        }
                   }
+           
                    stage('Build Maven'){
                       tools{
                        maven 'maven-3.9.3'
