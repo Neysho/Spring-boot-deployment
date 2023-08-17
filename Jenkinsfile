@@ -11,6 +11,13 @@ spec:
     imagePullPolicy: IfNotPresent
     command: ["cat"]
     tty: true
+    resources:
+      requests:
+        cpu: "0.3"
+        memory: "1000Mi"
+      limits:
+        cpu: "1"
+        memory: "2000Mi"
   - name: docker
     image: docker:latest
     imagePullPolicy: IfNotPresent
@@ -40,10 +47,14 @@ spec:
                         steps{
                         //  deleteDir()
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-                         sh 'echo ${{ vars.DB_HOST }}'  
-                         sh 'echo ${{ secrets.DB_USERNAME }}'
+                         // sh 'echo ${{ secrets.DB_USERNAME }}'
                         }
                   }
+           stage('Test db_host var'){
+                 steps{
+                     sh 'echo ${{ vars.DB_HOST }}'  
+                 }
+             }
          //           stage('Build Maven'){
          //              tools{
          //               maven 'maven-3.9.3'
