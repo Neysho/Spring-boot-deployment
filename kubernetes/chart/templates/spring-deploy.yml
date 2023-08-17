@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "springboot.fullname" . }}-dep
-  namespace: emp
+  namespace: {{ .Values.namespace }}
   labels:
   {{- include "springboot.labels" . | nindent 4 }}
 spec:
@@ -42,18 +42,3 @@ spec:
         resources: {}
       imagePullSecrets:
       - name: regcred
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "springboot.fullname" . }}-svc
-  namespace: emp
-  labels:
-  {{- include "springboot.labels" . | nindent 4 }}
-spec:
-  type: {{ .Values.svc.type }}
-  selector:
-    app: springboot-app
-  {{- include "springboot.selectorLabels" . | nindent 4 }}
-  ports:
-        {{- .Values.svc.ports | toYaml | nindent 2 -}}

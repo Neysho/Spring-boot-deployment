@@ -1,3 +1,6 @@
+
+namespace: emp
+
 dep:
   replicas: 1
   springbootApp:
