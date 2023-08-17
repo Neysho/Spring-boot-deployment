@@ -17,7 +17,7 @@ spec:
         memory: "1000Mi"
       limits:
         cpu: "1"
-        memory: "2000Mi"
+        memory: "2000Mi"   
   - name: docker
     image: docker:latest
     imagePullPolicy: IfNotPresent
@@ -35,29 +35,26 @@ spec:
       }
     }
     
-    // environment{
-    //     DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
-    //     DB_HOST = '10.97.244.243'
-    //     DB_USERNAME = 'root'
-    //     DB_PASSWORD = 'root'
-    //     DB_NAME = 'bsisa'
-    // }
     environment{
-     DB_HOST = ${{ vars.DB_HOST }}
+        DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
+        // DB_HOST = '10.97.244.243'
+        // DB_USERNAME = 'root'
+        // DB_PASSWORD = 'root'
+        // DB_NAME = 'bsisa'
     }
        stages{
              stage('checkout'){
                         steps{
                         //  deleteDir()
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
-                         // sh 'echo ${{ secrets.DB_USERNAME }}'
-                        }
+                       }
                   }
-           stage('Test db_host var'){
-                 steps{
-                     sh 'echo "$DB_HOST"'
-                 }
-             }
+              stage('test var'){
+                        steps{
+                          sh 'echo "$DB_HOST"'
+                       }
+                  }
+           
          //           stage('Build Maven'){
          //              tools{
          //               maven 'maven-3.9.3'
