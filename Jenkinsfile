@@ -38,10 +38,7 @@ spec:
     environment{
         DOCKERHUB_CREDENTIALS=credentials('docker-hub-neysho')
         DB_USERNAME = credentials('mysql_user')
-        // DB_HOST = '10.97.244.243'
-        // DB_USERNAME = 'root'
-        // DB_PASSWORD = 'root'
-        // DB_NAME = 'bsisa'
+        DB_PASSWORD = credentials('mysql_password')
     }
        stages{
              stage('checkout'){
@@ -50,71 +47,65 @@ spec:
                          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-neysho', url: 'https://github.com/Neysho/Spring-boot-deployment.git']])
                        }
                   }
-              stage('test var'){
-                        steps{
-                          sh 'echo "$DB_HOST"'
-                          sh 'echo "$DB_USERNAME"'    
-                       }
-                  }
            
-         //           stage('Build Maven'){
-         //              tools{
-         //               maven 'maven-3.9.3'
-         //              }
-         //         steps{
-         //             sh 'mvn clean install'
-         //         }
-         //     }
-         //    stage("Sonarqube Analysis") {
-         //        tools{
-         //            maven 'maven-3.9.3'
-         //            }
-         //     steps {
-         //         script {
-         //             withSonarQubeEnv(credentialsId: 'sonar-id') {
-         //                 sh "mvn sonar:sonar"
-         //             }
-         //         }
-         //     }
+                   stage('Build Maven'){
+                      tools{
+                       maven 'maven-3.9.3'
+                      }
+                 steps{
+                     sh 'mvn clean install'
+                 }
+             }
+            stage("Sonarqube Analysis") {
+                tools{
+                    maven 'maven-3.9.3'
+                    }
+             steps {
+                 script {
+                     withSonarQubeEnv(credentialsId: 'sonar-id') {
+                         sh "mvn sonar:sonar"
+                     }
+                 }
+             }
 
-         // }
-         //     stage('docker build'){
-         //         steps{
-         //             container('docker') {
-         //                 sh ''' ls
-         //                        docker build -t neysho/emp-backend:1 .
-         //                        echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-         //                        docker push neysho/emp-backend:1
-         //                 '''
-         //        }
-         //       }
-         //     }
+         }
+             stage('docker build'){
+                 steps{
+                     container('docker') {
+                         sh ''' ls
+                                docker build -t neysho/emp-backend:1 .
+                                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                                docker push neysho/emp-backend:1
+                         '''
+                }
+               }
+             }
            
-         //     stage('indentifying misconfigs using datree in helm charts'){
-         //         agent any
-         //     steps{
-         //      catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-         //            // Steps that might fail but should be ignored
-         //            script{
-         //                  withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
-         //                       sh 'helm datree test kubernetes/chart/'
-         //                }
-         //         }
-         //        }
+             stage('indentifying misconfigs using datree in helm charts'){
+                 agent any
+             steps{
+              catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                    // Steps that might fail but should be ignored
+                    script{
+                          withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
+                               sh 'helm datree test kubernetes/chart/'
+                        }
+                 }
+                }
                  
-         //     }
-         // }
+             }
+         }
             
-         //     stage('Deploying to kubernetes') {
-         //         steps {
-         //             container('kubectl') {
-         //              withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
-         //              // sh 'kubectl get pods'
-         //              sh 'kubectl delete pods -n emp -l app=springboot-k8s-mysql'
-         //           }
-         //           }
-         //         }
-         //     }
+             stage('Deploying to kubernetes') {
+                 steps {
+                     container('kubectl') {
+                      withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
+                      // sh 'kubectl get pods'
+                      sh 'kubectl delete pods -n emp -l app=springboot-k8s-mysql'
+                   }
+                   }
+                 }
+             }
       
     }
     post {
