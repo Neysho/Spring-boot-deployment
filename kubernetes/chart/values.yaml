@@ -38,9 +38,27 @@ mysql:
       CREATE USER 'admin'@'%' IDENTIFIED BY 'root';
       GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
       FLUSH PRIVILEGES;
-  primary:    
-    persistence:
-      enabled: true
-      storageClass: local-storage
-      accessMode: ReadWriteOnce
-      size: 3Gi
+  volumePermissions:
+    enabled: true
+  persistence:
+    enabled: true
+    storageClass: local-storage  # Specify your desired storage class
+    accessModes:
+      - ReadWriteOnce  # Adjust as needed
+    size: 3Gi  # Adjust the size according to your requirements    
+    existingClaim: ""  # If using an existing PVC, specify its name here
+    mountPath: /mnt/mysql  # Specify the desired mount path for the volume
+    nodeAffinity:  # Add node affinity rules here if needed
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - worker2
+  # primary:    
+  #   persistence:
+  #     enabled: true
+  #     storageClass: local-storage
+  #     accessMode: ReadWriteOnce
+  #     size: 3Gi

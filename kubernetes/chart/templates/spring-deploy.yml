@@ -1,21 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "springboot.fullname" . }}-dep
+  name: {{ .Release.Name }}-backend-deployment
   namespace: {{ .Values.namespace }}
-  labels:
-  {{- include "springboot.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.dep.replicas }}
   selector:
     matchLabels:
-      app: springboot-app
-    {{- include "springboot.selectorLabels" . | nindent 6 }}
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: springboot-app
-      {{- include "springboot.selectorLabels" . | nindent 8 }}
+        app: {{ .Release.Name }}
     spec:
       containers:
       - env:
