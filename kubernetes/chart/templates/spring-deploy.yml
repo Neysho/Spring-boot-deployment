@@ -27,9 +27,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: mysqlPassword
-        - name: DATABASE_DRIVER
-          value: {{ .Values.mysql.mysqlDriver | quote }}       
+              key: mysqlPassword  
         image: {{ .Values.dep.springbootApp.image.repository }}:{{ .Values.dep.springbootApp.image.tag }}
         imagePullPolicy: {{ .Values.dep.springbootApp.imagePullPolicy }}
         name: springboot-app

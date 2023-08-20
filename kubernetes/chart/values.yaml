@@ -22,25 +22,12 @@ rbac:
   create: true
 
 mysql:
-  enabled: true
   namespace: emp  # Specify the desired namespace
+  image: mysql:5.7
   host: mysql  
-  mysqlDriver: mysql
   mysqlRootPassword: root
   mysqlDatabase: bsisa 
   mysqlUser: admin
   mysqlPassword: root
   service:
-    port: 3306    
-  initdbScripts:
-    initdb.sql: |-
-      CREATE DATABASE IF NOT EXISTS bsisa DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-      CREATE USER 'admin'@'%' IDENTIFIED BY 'root';
-      GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
-      FLUSH PRIVILEGES;
-  primary:    
-    persistence:
-      enabled: true
-      storageClass: local-storage
-      accessMode: ReadWriteOnce
-      size: 3Gi    
+    port: 3306
