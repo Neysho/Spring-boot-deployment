@@ -9,10 +9,9 @@ dep:
       tag: "1"
     imagePullPolicy: Always
 svc:
-  ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
+  port: 8080
+  protocol: TCP
+  targetPort: 8080
   type: NodePort
   
 serviceAccount:
@@ -24,6 +23,7 @@ rbac:
 
 mysql:
   enabled: true
+  namespace: emp  # Specify the desired namespace
   host: mysql  
   mysqlDriver: mysql
   mysqlRootPassword: root
@@ -38,24 +38,21 @@ mysql:
       CREATE USER 'admin'@'%' IDENTIFIED BY 'root';
       GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
       FLUSH PRIVILEGES;
-  volumePermissions:
-    enabled: true
   persistence:
     enabled: true
-    storageClass: local-storage  # Specify your desired storage class
+    storageClass: local-storage
     accessModes:
-      - ReadWriteOnce  # Adjust as needed
-    size: 3Gi  # Adjust the size according to your requirements    
-    existingClaim: ""  # If using an existing PVC, specify its name here
-    mountPath: /mnt/mysql  # Specify the desired mount path for the volume
-    nodeAffinity:  # Add node affinity rules here if needed
+      - ReadWriteOnce
+    size: 3Gi
+    mountPath: /mnt/mysql
+    nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-            - worker2
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - worker2
   # primary:    
   #   persistence:
   #     enabled: true

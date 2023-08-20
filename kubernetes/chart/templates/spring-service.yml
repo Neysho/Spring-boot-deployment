@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   ports:
-    - port: {{ .Values.svc.ports.port }}
-      protocol: {{ .Values.svc.ports.protocol }}
-      targetPort: {{ .Values.svc.ports.targetPort }}
+    - port: {{ .Values.svc.port }}
+      protocol: {{ .Values.svc.protocol }}
+      targetPort: {{ .Values.svc.targetPort }}
   selector:
     app: {{ .Release.Name }}
   type: {{ .Values.svc.type }}
