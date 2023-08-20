@@ -23,7 +23,7 @@ rbac:
 
 mysql:
   enabled: true
-  namespace: emp  # Specify the desired namespace
+  namespaceOverride: emp  # Specify the desired namespace
   host: mysql  
   mysqlDriver: mysql
   mysqlRootPassword: root
@@ -40,19 +40,7 @@ mysql:
       FLUSH PRIVILEGES;
   persistence:
     enabled: true
-    storageClass: local-storage
-    accessModes:
-      - ReadWriteOnce
-    size: 3Gi
-    mountPath: /mnt/mysql
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                  - worker2
+    existingClaim: mysql-pv-claim 
   # primary:    
   #   persistence:
   #     enabled: true
