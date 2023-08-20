@@ -22,7 +22,10 @@ spec:
         - name: DB_NAME
           value: {{ .Values.mysql.mysqlDatabase | quote }}
         - name: DB_USERNAME
-          value: {{ .Values.mysql.mysqlUser | quote }}
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: mysqlUser
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:

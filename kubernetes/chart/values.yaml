@@ -27,7 +27,7 @@ mysql:
   host: mysql  
   mysqlRootPassword: root
   mysqlDatabase: bsisa 
-  mysqlUser: admin
+  mysqlUser: root
   mysqlPassword: root
   service:
     port: 3306
