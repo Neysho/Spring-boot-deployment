@@ -23,7 +23,7 @@ rbac:
 
 mysql:
   enabled: true
-  namespaceOverride: emp  # Specify the desired namespace
+  namespace: emp  # Specify the desired namespace
   host: mysql  
   mysqlDriver: mysql
   mysqlRootPassword: root
@@ -38,12 +38,9 @@ mysql:
       CREATE USER 'admin'@'%' IDENTIFIED BY 'root';
       GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
       FLUSH PRIVILEGES;
-  persistence:
-    enabled: true
-    existingClaim: mysql-pv-claim 
-  # primary:    
-  #   persistence:
-  #     enabled: true
-  #     storageClass: local-storage
-  #     accessMode: ReadWriteOnce
-  #     size: 3Gi
+  primary:    
+    persistence:
+      enabled: true
+      storageClass: local-storage
+      accessMode: ReadWriteOnce
+      size: 3Gi    
