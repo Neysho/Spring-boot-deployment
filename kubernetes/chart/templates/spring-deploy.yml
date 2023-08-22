@@ -7,11 +7,11 @@ spec:
   replicas: {{ .Values.dep.replicas }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ .Release.Name }}-backend
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ .Release.Name }}-backend
     spec:
       containers:
       - env:

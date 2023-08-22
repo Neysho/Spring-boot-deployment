@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend-deployment
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.angular-dep.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-frontend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-frontend
+    spec:
+      containers: 
+        image: {{ .Values.angular-dep.angularApp.image.repository }}:{{ .Values.angular-dep.angularApp.image.tag }}
+        imagePullPolicy: {{ .Values.dep.angularApp.imagePullPolicy }}
+        name: angular-app
+        ports:
+        - containerPort: 80
+        resources: {}
+      imagePullSecrets:
+      - name: regcred

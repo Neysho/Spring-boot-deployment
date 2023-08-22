@@ -9,5 +9,5 @@ spec:
       protocol: {{ .Values.svc.protocol }}
       targetPort: {{ .Values.svc.targetPort }}
   selector:
-    app: {{ .Release.Name }}
+    app: {{ .Release.Name }}-backend
   type: {{ .Values.svc.type }}

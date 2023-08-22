@@ -31,3 +31,16 @@ mysql:
   mysqlPassword: root
   service:
     port: 3306
+
+angular-dep:
+  replicas: 1
+  angularApp:
+    image:
+      repository: neysho/emp-frontend
+      tag: "1"
+    imagePullPolicy: Always
+angular-svc:
+  port: 80
+  protocol: TCP
+  targetPort: 80
+  type: NodePort  
