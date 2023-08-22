@@ -101,7 +101,7 @@ spec:
                      container('kubectl') {
                       withKubeConfig([credentialsId: 'kube-config', serverUrl: 'https://192.168.1.130:6443']) {
                       // sh 'kubectl get pods'
-                      sh 'kubectl delete pods -n emp -l app=springboot-k8s-mysql'
+                      sh 'kubectl delete pods -n emp -l app=emp-backend'
                    }
                    }
                  }
