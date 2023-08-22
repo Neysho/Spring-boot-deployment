@@ -5,9 +5,9 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   ports:
-    - port: {{ .Values.angular-svc.port }}
-      protocol: {{ .Values.angular-svc.protocol }}
-      targetPort: {{ .Values.angular-svc.targetPort }}
+    - port: {{ .Values.angular.svc.port }}
+      protocol: {{ .Values.angular.svc.protocol }}
+      targetPort: {{ .Values.angular.svc.targetPort }}
   selector:
     app: {{ .Release.Name }}-frontend
-  type: {{ .Values.angular-svc.type }}
+  type: {{ .Values.angular.svc.type }}

@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-frontend-deployment
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.angular-dep.replicas }}
+  replicas: {{ .Values.angular.dep.replicas }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-frontend
@@ -14,7 +14,7 @@ spec:
         app: {{ .Release.Name }}-frontend
     spec:
       containers: 
-        image: {{ .Values.angular-dep.angularApp.image.repository }}:{{ .Values.angular-dep.angularApp.image.tag }}
+        image: {{ .Values.angular.dep.angularApp.image.repository }}:{{ .Values.angular.dep.angularApp.image.tag }}
         imagePullPolicy: {{ .Values.dep.angularApp.imagePullPolicy }}
         name: angular-app
         ports:
