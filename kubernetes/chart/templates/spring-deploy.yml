@@ -19,7 +19,6 @@ spec:
         {{ toYaml .Values.dep.springbootApp.env | nindent 12 }}  
         image: {{ .Values.dep.springbootApp.image.repository }}:{{ .Values.dep.springbootApp.image.tag }}
         imagePullPolicy: {{ .Values.dep.springbootApp.imagePullPolicy }}
-        
         ports:
         - containerPort: 8080
         resources: {}

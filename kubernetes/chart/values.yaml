@@ -12,27 +12,21 @@ dep:
     - name: FRONTEND_INGRESS
       value: emp.dev.neysho.com
     - name: DB_HOST
-      value: {{ .Values.mysql.host | quote }}
+      value: mysql
     - name: DB_PORT
-      value: {{ .Values.mysql.service.port | quote }}
+      value: 3306
     - name: DB_NAME
-      value: {{ .Values.mysql.mysqlDatabase | quote }}
+      value: bsisa
     - name: DB_USERNAME
-      valueFrom:
-        secretKeyRef:
-          name: mysql-secrets
-          key: mysqlUser
+      value: root
     - name: DB_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: mysql-secrets
-          key: mysqlPassword
+      value: root
     
 svc:
   port: 8080
   protocol: TCP
   targetPort: 8080
-  type: NodePort
+  type: ClusterIP
   
 serviceAccount:
   create: true
@@ -64,9 +58,9 @@ angular:
     port: 80
     protocol: TCP
     targetPort: 80
-    type: NodePort  
+    type: ClusterIP  
   env: # Add the environment variable here
   - name: BACKEND_INGRESS
-    value: springboot.dev.neysho.com
+    value: emp.dev.neysho.com/backend
 
       
