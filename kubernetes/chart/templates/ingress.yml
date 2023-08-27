@@ -7,16 +7,6 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-    - host: springboot.dev.neysho.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Release.Name }}-backend-svc
-                port:
-                  number: 8080
     - host: emp.dev.neysho.com
       http:
         paths:
@@ -26,4 +16,11 @@ spec:
               service:
                 name: {{ .Release.Name }}-frontend-svc
                 port:
-                  number: 80              
+                  number: 80     
+          - path: /backend
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-backend-svc
+                port:
+                  number: 8080                 

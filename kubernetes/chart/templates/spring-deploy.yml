@@ -14,26 +14,12 @@ spec:
         app: {{ .Release.Name }}-backend
     spec:
       containers:
-      - env:
-        - name: DB_HOST
-          value: {{ .Values.mysql.host | quote }}
-        - name: DB_PORT
-          value: {{ .Values.mysql.service.port | quote }}
-        - name: DB_NAME
-          value: {{ .Values.mysql.mysqlDatabase | quote }}
-        - name: DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secrets
-              key: mysqlUser
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secrets
-              key: mysqlPassword  
+      - name: springboot-app 
+        env:
+        {{ toYaml .Values.dep.springbootApp.env | nindent 12 }}  
         image: {{ .Values.dep.springbootApp.image.repository }}:{{ .Values.dep.springbootApp.image.tag }}
         imagePullPolicy: {{ .Values.dep.springbootApp.imagePullPolicy }}
-        name: springboot-app
+        
         ports:
         - containerPort: 8080
         resources: {}

@@ -19,6 +19,8 @@ spec:
         imagePullPolicy: {{ .Values.angular.dep.angularApp.imagePullPolicy }}
         ports:
         - containerPort: 80
+        env:
+        {{ toYaml .Values.angular.env | nindent 12 }}
         resources: {}
       imagePullSecrets:
       - name: regcred

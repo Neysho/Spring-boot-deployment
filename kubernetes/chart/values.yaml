@@ -8,6 +8,26 @@ dep:
       repository: neysho/emp-backend
       tag: "1"
     imagePullPolicy: Always
+    env:
+    - name: FRONTEND_INGRESS
+      value: emp.dev.neysho.com
+    - name: DB_HOST
+      value: {{ .Values.mysql.host | quote }}
+    - name: DB_PORT
+      value: {{ .Values.mysql.service.port | quote }}
+    - name: DB_NAME
+      value: {{ .Values.mysql.mysqlDatabase | quote }}
+    - name: DB_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: mysql-secrets
+          key: mysqlUser
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mysql-secrets
+          key: mysqlPassword
+    
 svc:
   port: 8080
   protocol: TCP
@@ -45,3 +65,8 @@ angular:
     protocol: TCP
     targetPort: 80
     type: NodePort  
+  env: # Add the environment variable here
+  - name: BACKEND_INGRESS
+    value: springboot.dev.neysho.com
+
+      
