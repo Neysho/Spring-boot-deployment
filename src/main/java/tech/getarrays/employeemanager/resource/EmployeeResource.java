@@ -8,7 +8,6 @@ import tech.getarrays.employeemanager.service.EmployeeService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://192.168.1.130:30170")
 @RestController
 @RequestMapping("/employee")
 public class EmployeeResource {

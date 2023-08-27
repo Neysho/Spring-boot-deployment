@@ -14,7 +14,7 @@ dep:
   - name: DB_HOST
     value: mysql
   - name: DB_PORT
-    value: 3306
+    value: "3306"
   - name: DB_NAME
     value: bsisa
   - name: DB_USERNAME
