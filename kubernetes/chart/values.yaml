@@ -8,19 +8,19 @@ dep:
       repository: neysho/emp-backend
       tag: "1"
     imagePullPolicy: Always
-    env:
-    - name: FRONTEND_INGRESS
-      value: emp.dev.neysho.com
-    - name: DB_HOST
-      value: mysql
-    - name: DB_PORT
-      value: 3306
-    - name: DB_NAME
-      value: bsisa
-    - name: DB_USERNAME
-      value: root
-    - name: DB_PASSWORD
-      value: root
+  env:
+  - name: FRONTEND_INGRESS
+    value: emp.dev.neysho.com
+  - name: DB_HOST
+    value: mysql
+  - name: DB_PORT
+    value: 3306
+  - name: DB_NAME
+    value: bsisa
+  - name: DB_USERNAME
+    value: root
+  - name: DB_PASSWORD
+    value: root  
     
 svc:
   port: 8080

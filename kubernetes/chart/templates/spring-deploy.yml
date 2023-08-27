@@ -14,13 +14,13 @@ spec:
         app: {{ .Release.Name }}-backend
     spec:
       containers:
-      - name: springboot-app 
-        env:
-        {{ toYaml .Values.dep.springbootApp.env | nindent 12 }}  
+      - name: springboot-app   
         image: {{ .Values.dep.springbootApp.image.repository }}:{{ .Values.dep.springbootApp.image.tag }}
         imagePullPolicy: {{ .Values.dep.springbootApp.imagePullPolicy }}
         ports:
         - containerPort: 8080
+        env:
+        {{- toYaml .Values.dep.env | nindent 12 }}
         resources: {}
       imagePullSecrets:
       - name: regcred
