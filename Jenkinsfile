@@ -87,6 +87,7 @@ spec:
               catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     // Steps that might fail but should be ignored
                     script{
+                         // sh 'kubescape scan kubernetes/manifests --submit --account 54b216e2-2064-4fc5-93f7-44a22004f25e'
                           withEnv(['DATREE_TOKEN=624f205a-f8f9-4d84-a34b-7b1fe5f3fb50']) {
                                sh 'helm datree test kubernetes/chart/'
                         }
