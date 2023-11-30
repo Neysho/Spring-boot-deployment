@@ -80,6 +80,21 @@ spec:
                 }
                }
              }
+           stage('Trivy Scan'){
+                steps{
+                    sh 'trivy image --scanners vuln neysho/achat-backend:1  --timeout 35m > backend-scan.txt'
+                }
+                post { 
+                    success {
+                     slackUploadFile filePath: 'backend-scan.txt', initialComment: 'Trivy Scan :'
+                     } 
+                    failure {
+                            slackSend color: "danger", 
+                             message: "Pipeline failed in stage 'Trivy Scan'",
+                             tokenCredentialId: 'slack-alert-bot'
+                     }
+                }
+            }
            
              stage('indentifying misconfigs using datree in helm charts'){
                  agent any
@@ -109,10 +124,23 @@ spec:
              }
       
     }
-    post {
-        // Clean after build
-        always {
-            cleanWs()
-            }
-          }
+   post {
+            always {
+                script {
+                    emailext attachLog: true, body: 'Here is your Log file.',
+                    subject: 'Jenkins Notification', attachmentsPattern: 'backend-scan.txt',
+                    to: 'azizamari100@gmail.com'
+                    cleanWs()
+                }
+              }
+               success {
+                    slackSend color: "good",  message: 'Pipeline completed successfully!',
+                     tokenCredentialId: 'slack-alert-bot'
+              }  
+               failure {
+                    slackSend color: "warning",
+                     message: 'Check logs.',
+                     tokenCredentialId: 'slack-alert-bot'
+             }
+         }
   }
